@@ -27,7 +27,6 @@
                             </a>
                         </li>
 
-<<<<<<< HEAD
                         <li>
                             <a href="{{ route('Tarif.tarif') }}">
                                 <i data-feather="dollar-sign"></i>
@@ -89,8 +88,6 @@
                                 <span>Riwayat</span>
                             </a>
                         </li>
-=======
->>>>>>> f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
                         @endif
 
                     </ul>

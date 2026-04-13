@@ -10,10 +10,7 @@
     <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/icons.min.css') }}" rel="stylesheet">
     <link href="{{ asset('assets/css/app.min.css') }}" rel="stylesheet">
-<<<<<<< HEAD
 
-=======
->>>>>>> f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
 </head>
 
 <body data-sidebar="light">
