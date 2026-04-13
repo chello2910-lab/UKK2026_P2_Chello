@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
+ HEAD
 
 
     public function index()
@@ -29,12 +30,29 @@ class UserController extends Controller
         return view('User.create', compact('user'));
     }
 
+
+
+    public function index()
+    {
+        $users = User::latest()->get();
+        return view('User.user', compact('users'));
+    }
+
+
+    public function create()
+    {
+        return view('User.create', ['user' => null]);
+    }
+
+
+ f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
     public function edit($id)
     {
         $user = User::findOrFail($id);
         return view('User.create', compact('user'));
     }
 
+HEAD
     public function delete($id)
     {
         $user = User::find($id);
@@ -85,12 +103,42 @@ class UserController extends Controller
         return redirect()->route('user');
     }
 
+
+    // ===============================
+    // SIMPAN USER (TANPA STATUS)
+    // ===============================
+    public function store(Request $request)
+    {
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required|min:4',
+            'role' => 'required'
+        ]);
+
+        $user = User::create([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role
+        ]);
+
+        $this->logAktivitas("Tambah user: {$user->name}");
+
+        return redirect()->route('user')->with('success', 'User berhasil ditambahkan');
+    }
+
+    // ===============================
+    // UPDATE USER (TANPA STATUS)
+    // ===============================
+ f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
     public function update(Request $request, $id)
     {
         $user = User::findOrFail($id);
 
         $request->validate([
             'name' => 'required',
+ HEAD
             'email' => 'required|email',
             'role' => 'required',
             'shift' => 'required_if:role,petugas',
@@ -180,6 +228,56 @@ class UserController extends Controller
     {
         DB::table('t_log_aktivitas')->insert([
             'id_user' => auth()->id() ?? null,
+
+            'email' => 'required|email|unique:users,email,' . $id,
+            'role' => 'required'
+        ]);
+
+        $data = [
+            'name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role
+        ];
+
+        // 🔥 FIX PASSWORD
+        if (!empty($request->password)) {
+            $data['password'] = Hash::make($request->password);
+        }
+
+        $user->update($data);
+
+        $this->logAktivitas("Edit user: {$user->name}");
+
+        return redirect()->route('user')->with('success', 'User berhasil diupdate');
+    }
+
+    // ===============================
+    // DELETE USER
+    // ===============================
+    public function delete($id)
+    {
+        $user = User::find($id);
+
+        if (!$user) {
+            return redirect()->route('user')->with('error', 'User tidak ditemukan');
+        }
+
+        $nama = $user->name;
+        $user->delete();
+
+        $this->logAktivitas("Hapus user: {$nama}");
+
+        return redirect()->route('user')->with('success', 'User berhasil dihapus');
+    }
+
+    // ===============================
+    // LOG AKTIVITAS
+    // ===============================
+    private function logAktivitas($text)
+    {
+        DB::table('t_log_aktivitas')->insert([
+            'id_user' => auth()->id(),
+ f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
             'aktivitas' => $text,
             'waktu_aktivitas' => now()
         ]);

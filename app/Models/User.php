@@ -21,7 +21,10 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
+<<<<<<< HEAD
         'shift',
+=======
+>>>>>>> f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
         'status'
     ];
 

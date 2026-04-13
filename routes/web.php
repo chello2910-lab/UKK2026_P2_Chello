@@ -6,12 +6,15 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\DashboardController;
+<<<<<<< HEAD
 use App\Http\Controllers\TarifController;
 use App\Http\Controllers\AreaController;
 use App\Http\Controllers\KendaraanController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\LogAktivitasController;
+=======
+>>>>>>> f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
 use App\Http\Controllers\UserController;
 
 
@@ -35,11 +38,15 @@ Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
+<<<<<<< HEAD
 // Untuk User
+=======
+>>>>>>> f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
 Route::get('/user', [UserController::class, 'index'])->name('user');
 Route::get('/user/create', [UserController::class, 'create'])->name('user.create');
 Route::post('/user/store', [UserController::class, 'store'])->name('user.store');
 Route::get('/user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
+<<<<<<< HEAD
 Route::put('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
 Route::delete('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
 //untuk tarif
@@ -86,4 +93,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+=======
+Route::post('/user/update/{id}', [UserController::class, 'update'])->name('user.update');
+Route::post('/user/delete/{id}', [UserController::class, 'delete'])->name('user.delete');
+>>>>>>> f474ab34b311fe87a9b8fd39b467fa9d9b20fc34
 require __DIR__ . '/auth.php';
